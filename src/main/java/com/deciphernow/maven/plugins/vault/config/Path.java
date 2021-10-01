@@ -68,6 +68,7 @@ public class Path implements Serializable {
    *
    * @return the hash code
    */
+  @Override
   public int hashCode() {
     return Objects.hash(this.name, this.mappings);
   }
@@ -77,6 +78,7 @@ public class Path implements Serializable {
    *
    * @return {@code true} if the this path is equal to the object; otherwise, {@code false}
    */
+  @Override
   public boolean equals(Object object) {
     if (object instanceof Path) {
       Path that = (Path) object;

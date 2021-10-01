@@ -67,6 +67,7 @@ public class Mapping implements Serializable {
    *
    * @return the hash code
    */
+  @Override
   public int hashCode() {
     return Objects.hash(this.key, this.property);
   }
@@ -76,6 +77,7 @@ public class Mapping implements Serializable {
    *
    * @return {@code true} if the this mapping is equal to the object; otherwise, {@code false}
    */
+  @Override
   public boolean equals(Object object) {
     if (object instanceof Mapping) {
       Mapping that = (Mapping) object;

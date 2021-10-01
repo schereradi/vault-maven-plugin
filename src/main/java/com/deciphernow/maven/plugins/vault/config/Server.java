@@ -135,6 +135,7 @@ public class Server implements Serializable {
    *
    * @return the hash code
    */
+  @Override
   public int hashCode() {
     return Objects.hash(this.sslCertificate, this.sslVerify,
         this.token, this.url, this.paths, this.skipExecution, this.engineVersion);
@@ -145,6 +146,7 @@ public class Server implements Serializable {
    *
    * @return {@code true} if the this server is equal to the object; otherwise, {@code false}
    */
+  @Override
   public boolean equals(Object object) {
     if (object instanceof Server) {
       Server that = (Server) object;
