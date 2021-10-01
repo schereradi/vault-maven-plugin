@@ -72,7 +72,7 @@ public class IntTestPullMojo {
       List<Path> paths = randomPaths(10, 10);
       File certificate = new File(VAULT_CERTIFICATE.toURI());
       System.out.println(String.format("%s/%s", VAULT_SERVER, VAULT_TOKEN));
-      this.servers = ImmutableList.of(new Server(VAULT_SERVER, VAULT_TOKEN, true, certificate, paths, false));
+      this.servers = ImmutableList.of(new Server(VAULT_SERVER, VAULT_TOKEN, true, certificate, paths, false, 1));
       this.properties = new Properties();
       this.servers.stream().forEach(server -> {
         server.getPaths().stream().forEach(path -> {

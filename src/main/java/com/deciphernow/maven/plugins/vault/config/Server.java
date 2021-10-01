@@ -38,6 +38,8 @@ public class Server implements Serializable {
 
   private boolean skipExecution;
 
+  private Integer engineVersion;
+
   /**
    * Initializes a new instance of the {@link Server} class.
    */
@@ -51,15 +53,18 @@ public class Server implements Serializable {
    * @param sslVerify {@code true} if the SSL connection should be verified; otherwise, {@code false}
    * @param sslCertificate the SSL certificate file or null
    * @param paths the paths for the server
+   * @param skipExecution the server execution toggle
+   * @param engineVersion the server engine version
    */
   public Server(String url, String token, boolean sslVerify, File sslCertificate, List<Path> paths,
-                boolean skipExecution) {
+                boolean skipExecution, Integer engineVersion) {
     this.paths = paths;
     this.sslCertificate = sslCertificate;
     this.sslVerify = sslVerify;
     this.token = token;
     this.url = url;
     this.skipExecution = skipExecution;
+    this.engineVersion = engineVersion;
   }
 
   /**
@@ -117,12 +122,22 @@ public class Server implements Serializable {
   }
 
   /**
+   * Gets the engine version of this server.
+   *
+   * @return the engine version
+   */
+  public Integer getEngineVersion() {
+    return this.engineVersion;
+  }
+
+  /**
    * Returns a hash code value for this server.
    *
    * @return the hash code
    */
   public int hashCode() {
-    return Objects.hash(this.sslCertificate, this.sslVerify, this.token, this.url, this.paths, this.skipExecution);
+    return Objects.hash(this.sslCertificate, this.sslVerify,
+        this.token, this.url, this.paths, this.skipExecution, this.engineVersion);
   }
 
   /**
@@ -138,7 +153,8 @@ public class Server implements Serializable {
           && Objects.equals(this.skipExecution, that.skipExecution)
           && Objects.equals(this.sslCertificate, that.sslCertificate)
           && Objects.equals(this.token, that.token)
-          && Objects.equals(this.url, that.url);
+          && Objects.equals(this.url, that.url)
+          && Objects.equals(this.engineVersion, that.engineVersion);
     }
     return false;
   }

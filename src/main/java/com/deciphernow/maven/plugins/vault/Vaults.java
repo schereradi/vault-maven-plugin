@@ -16,6 +16,7 @@
 
 package com.deciphernow.maven.plugins.vault;
 
+import com.bettercloud.vault.SslConfig;
 import com.bettercloud.vault.Vault;
 import com.bettercloud.vault.VaultConfig;
 import com.bettercloud.vault.VaultException;
@@ -62,15 +63,14 @@ public final class Vaults {
       if (server.isSkipExecution()) {
         continue;
       }
-      Vault vault = vault(server.getUrl(), server.getToken(), server.getSslVerify(), server.getSslCertificate());
+      Vault vault = vault(server.getUrl(), server.getToken(), server.getSslVerify(), server.getSslCertificate(),
+              server.getEngineVersion());
       for (Path path : server.getPaths()) {
         Map<String, String> secrets = get(vault, path.getName());
         for (Mapping mapping : path.getMappings()) {
-          if (!secrets.containsKey(mapping.getKey())) {
-            String message = String.format("No value found in path %s for key %s", path.getName(), mapping.getKey());
-            throw new NoSuchElementException(message);
+          if (secrets.containsKey(mapping.getKey())) {
+            properties.setProperty(mapping.getProperty(), secrets.get(mapping.getKey()));
           }
-          properties.setProperty(mapping.getProperty(), secrets.get(mapping.getKey()));
         }
       }
     }
@@ -88,7 +88,8 @@ public final class Vaults {
       if (server.isSkipExecution()) {
         continue;
       }
-      Vault vault = vault(server.getUrl(), server.getToken(), server.getSslVerify(), server.getSslCertificate());
+      Vault vault = vault(server.getUrl(), server.getToken(), server.getSslVerify(), server.getSslCertificate(),
+              server.getEngineVersion());
       for (Path path : server.getPaths()) {
         Map<String, String> secrets = exists(vault, path.getName()) ? get(vault, path.getName()) : new HashMap<>();
         for (Mapping mapping : path.getMappings()) {
@@ -112,7 +113,7 @@ public final class Vaults {
    * @throws VaultException if an exception is thrown connecting to vault
    */
   private static boolean exists(Vault vault, String path) throws VaultException {
-    return !vault.logical().list(path).isEmpty();
+    return !vault.logical().list(path).getData().isEmpty();
   }
 
   /**
@@ -134,11 +135,12 @@ public final class Vaults {
    * @param vault the vault
    * @param path the path
    * @param secrets the secrets
-   * @return the data
    * @throws VaultException if an exception is thrown connecting to vault or the path does not exist
    */
   private static void set(Vault vault, String path, Map<String, String> secrets) throws VaultException {
-    vault.logical().write(path, secrets);
+    @SuppressWarnings({"unchecked", "rawtypes"})
+    Map<String, Object> nameValuePairs = (Map) secrets;
+    vault.logical().write(path, nameValuePairs);
   }
 
   /**
@@ -146,23 +148,27 @@ public final class Vaults {
    *
    * @param server the server
    * @param token the token
-   * @param sslCertificate the certificate file or null if not needed
    * @param sslVerify {@code true} if the connection should be verified; otherwise, {@code false}
+   * @param sslCertificate the certificate file or null if not needed
+   * @param engineVersion the server engine version
    * @return the vault
    */
   private static Vault vault(String server,
                              String token,
                              boolean sslVerify,
-                             File sslCertificate) throws VaultException {
+                             File sslCertificate,
+                             Integer engineVersion) throws VaultException {
+    SslConfig sslConfig = new SslConfig().verify(sslVerify);
+    if (sslCertificate != null) {
+      sslConfig.pemFile(sslCertificate);
+    }
     VaultConfig vaultConfig = new VaultConfig()
         .address(server)
         .openTimeout(OPEN_TIMEOUT)
         .readTimeout(READ_TIMEOUT)
-        .sslVerify(sslVerify)
+        .engineVersion(engineVersion)
+        .sslConfig(sslConfig)
         .token(token);
-    if (sslCertificate != null) {
-      vaultConfig.sslPemFile(sslCertificate);
-    }
     return new Vault(vaultConfig);
   }
 
