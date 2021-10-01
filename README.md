@@ -10,9 +10,9 @@ To include the vault-maven-plugin in your project add the following plugin to yo
 <build>
     <plugins>
         <plugin>
-            <groupId>com.deciphernow</groupId>
+            <groupId>io.github</groupId>
             <artifactId>vault-maven-plugin</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.1</version>
         </plugin>
     </plugins>
 </build>
@@ -26,9 +26,9 @@ In order to pull secrets you must add an execution to the plugin.  The following
 <build>
     <plugins>
         <plugin>
-            <groupId>com.deciphernow</groupId>
+            <groupId>io.github</groupId>
             <artifactId>vault-maven-plugin</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.1</version>
             <executions>
                 <execution>
                     <id>pull</id>
@@ -76,9 +76,9 @@ In order to pull secrets you must add an execution to the plugin.  The following
 <build>
     <plugins>
         <plugin>
-            <groupId>com.deciphernow</groupId>
+            <groupId>io.github</groupId>
             <artifactId>vault-maven-plugin</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.1.1</version>
             <executions>
                 <execution>
                     <id>push</id>

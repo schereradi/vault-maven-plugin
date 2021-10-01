@@ -20,14 +20,14 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.deciphernow</groupId>
+    <groupId>io.github</groupId>
     <artifactId>vault-maven-plugin</artifactId>
-    <version>1.1.1-SNAPSHOT</version>
+    <version>1.1.1</version>
     <packaging>maven-plugin</packaging>
 
     <name>Vault Maven Plugin</name>
     <description>A plugin that supports retrieving values from HashiCorp Vault.</description>
-    <url>https://github.com/deciphernow/vault-maven-plugin</url>
+    <url>https://github.com/schereradi/vault-maven-plugin</url>
 
     <licenses>
         <license>
@@ -37,9 +37,9 @@
     </licenses>
 
     <scm>
-        <connection>scm:git:git@github.com:deciphernow/vault-maven-plugin.git</connection>
-        <developerConnection>scm:git:git@github.com:deciphernow/vault-maven-plugin.git</developerConnection>
-        <url>https://github.com/deciphernow/vault-maven-plugin</url>
+        <connection>scm:git:git@github.com:schereradi/vault-maven-plugin.git</connection>
+        <developerConnection>scm:git:git@github.com:schereradi/vault-maven-plugin.git</developerConnection>
+        <url>https://github.com/schereradi/vault-maven-plugin</url>
     </scm>
 
     <distributionManagement>
@@ -350,25 +350,6 @@
             <id>deploy</id>
             <build>
                 <plugins>
-                    <plugin>
-                        <groupId>com.deciphernow</groupId>
-                        <artifactId>bouncycastle-maven-plugin</artifactId>
-                        <version>${version.bouncycastle.plugin}</version>
-                        <configuration>
-                            <passphrase>${env.PGP_PASSPHRASE}</passphrase>
-                            <rings>${env.PGP_RINGS}</rings>
-                            <userId>${env.PGP_USER_ID}</userId>
-                        </configuration>
-                        <executions>
-                            <execution>
-                                <id>sign-artifacts</id>
-                                <phase>verify</phase>
-                                <goals>
-                                    <goal>sign</goal>
-                                </goals>
-                            </execution>
-                        </executions>
-                    </plugin>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
