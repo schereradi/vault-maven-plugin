@@ -167,8 +167,9 @@ public final class Vaults {
         .openTimeout(OPEN_TIMEOUT)
         .readTimeout(READ_TIMEOUT)
         .engineVersion(engineVersion)
-        .sslConfig(sslConfig)
-        .token(token);
+        .sslConfig(sslConfig.build())
+        .token(token)
+        .build();
     return new Vault(vaultConfig);
   }
 
