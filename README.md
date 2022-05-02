@@ -12,7 +12,7 @@ To include the vault-maven-plugin in your project add the following plugin to yo
         <plugin>
             <groupId>io.github.schereradi</groupId>
             <artifactId>vault-maven-plugin</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.3</version>
         </plugin>
     </plugins>
 </build>
@@ -28,7 +28,7 @@ In order to pull secrets you must add an execution to the plugin.  The following
         <plugin>
             <groupId>io.github.schereradi</groupId>
             <artifactId>vault-maven-plugin</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.3</version>
             <executions>
                 <execution>
                     <id>pull</id>
@@ -78,7 +78,7 @@ In order to pull secrets you must add an execution to the plugin.  The following
         <plugin>
             <groupId>io.github.schereradi</groupId>
             <artifactId>vault-maven-plugin</artifactId>
-            <version>1.1.1</version>
+            <version>1.1.3</version>
             <executions>
                 <execution>
                     <id>push</id>
