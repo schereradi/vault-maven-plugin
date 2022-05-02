@@ -68,9 +68,11 @@ public final class Vaults {
       for (Path path : server.getPaths()) {
         Map<String, String> secrets = get(vault, path.getName());
         for (Mapping mapping : path.getMappings()) {
-          if (secrets.containsKey(mapping.getKey())) {
-            properties.setProperty(mapping.getProperty(), secrets.get(mapping.getKey()));
+          if (!secrets.containsKey(mapping.getKey())) {
+            String message = String.format("No value found in path %s for key %s", path.getName(), mapping.getKey());
+            throw new NoSuchElementException(message);
           }
+          properties.setProperty(mapping.getProperty(), secrets.get(mapping.getKey()));
         }
       }
     }
